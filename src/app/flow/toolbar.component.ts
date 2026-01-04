@@ -14,7 +14,7 @@ import { ThemeService } from '../theme.service';
   standalone: true,
   imports: [CommonModule, FormsModule, ButtonModule, SelectButtonModule, InputSwitchModule],
   template: `
-    <div class="bar">
+    <div class="bar" (click)="onToolbarClick($event)">
       <div class="group">
         <button pButton type="button" icon="pi pi-search-minus" (click)="zoomOut()" class="p-button-sm"></button>
         <button pButton type="button" icon="pi pi-search-plus" (click)="zoomIn()" class="p-button-sm"></button>
@@ -151,6 +151,8 @@ export class ToolbarComponent {
   readonly canRedo = this.store.canRedo;
   readonly isLight = this.theme.isLight;
 
+  private blurTimer: ReturnType<typeof setTimeout> | null = null;
+
   orientationOptions: Array<{ label: string; value: Orientation }> = [
     { label: 'LR', value: 'LR' },
     { label: 'TB', value: 'TB' }
@@ -193,5 +195,23 @@ export class ToolbarComponent {
 
   setLight(isLight: boolean) {
     this.theme.setLight(!!isLight);
+  }
+
+  onToolbarClick(ev: MouseEvent) {
+    const target = ev.target as HTMLElement | null;
+    if (!target) return;
+    const focusEl = target.closest('button, input, [tabindex]') as HTMLElement | null;
+    if (!focusEl) return;
+
+    if (this.blurTimer) {
+      clearTimeout(this.blurTimer);
+    }
+
+    this.blurTimer = setTimeout(() => {
+      if (document.activeElement === focusEl) {
+        focusEl.blur();
+      }
+      this.blurTimer = null;
+    }, 300);
   }
 }
