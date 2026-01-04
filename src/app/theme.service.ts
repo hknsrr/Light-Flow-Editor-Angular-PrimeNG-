@@ -1,11 +1,11 @@
-import { DOCUMENT } from '@angular/common';
+﻿import { DOCUMENT } from '@angular/common';
 import { Injectable, effect, inject, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   private readonly document = inject(DOCUMENT);
 
-  readonly isLight = signal(false);
+  readonly isLight = signal(true);
 
   constructor() {
     effect(() => {
@@ -23,3 +23,4 @@ export class ThemeService {
     this.isLight.update((v) => !v);
   }
 }
+
