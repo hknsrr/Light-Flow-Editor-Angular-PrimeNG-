@@ -1,0 +1,44 @@
+.app {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr 420px;
+  gap: 10px;
+  padding: 10px;
+}
+
+.left,
+.center,
+.right {
+  min-height: 0;
+  border-radius: 12px;
+}
+
+.left {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: auto;
+}
+
+.center {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  position: relative;
+}
+
+.right {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.centerHeader {
+  position: absolute;
+  inset: 8px 8px auto 8px;
+  z-index: 5;
+}
+
+.centerBody {
+  position: absolute;
+  inset: 0;
+}
