@@ -1,16 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostListener,
-  NgZone,
-  ViewChild,
-  computed,
-  effect,
-  inject,
-  signal
-} from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild, computed, effect, inject, signal, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlowStore } from './flow-store.service';
 import { EdgeLayerComponent } from './edge-layer.component';
@@ -231,7 +219,7 @@ export class FlowCanvasComponent implements AfterViewInit {
   private readonly fitViewEffect = effect(() => {
     this.store.fitViewTick();
     if (!this.viewReady) return;
-    this.fitToView();
+    untracked(() => this.fitToView());
   }, { allowSignalWrites: true });
 
   @ViewChild('root', { static: true }) rootRef!: ElementRef<HTMLDivElement>;
@@ -318,7 +306,7 @@ export class FlowCanvasComponent implements AfterViewInit {
     this.viewReady = true;
     if (this.didInitialFit) return;
     this.didInitialFit = true;
-    this.fitToView();
+    untracked(() => this.fitToView());
   }
 
   private fitToView() {
@@ -421,6 +409,7 @@ export class FlowCanvasComponent implements AfterViewInit {
 
   onWheel(ev: WheelEvent) {
     ev.preventDefault();
+    if (this.panActive || this.nodeDragActive || this.marqueeActive || this.connectPointerId != null) return;
 
     const vp = this.viewport();
     const root = this.rootRef.nativeElement.getBoundingClientRect();
@@ -783,6 +772,9 @@ export class FlowCanvasComponent implements AfterViewInit {
     }
   }
 }
+
+
+
 
 
 
