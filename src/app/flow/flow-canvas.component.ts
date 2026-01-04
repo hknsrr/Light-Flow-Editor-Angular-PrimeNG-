@@ -43,6 +43,7 @@ type DragPreview = {
         [edges]="edges()"
         [orientation]="orientation()"
         [selection]="selection()"
+        [nodeSizes]="nodeSizes()"
         [connecting]="connecting()"
         [previewState]="previewState()"
         [worldTransform]="worldTransform()"
@@ -230,7 +231,8 @@ export class FlowCanvasComponent implements AfterViewInit {
   readonly edges = this.store.edges;
   readonly orientation = this.store.orientation;
   readonly selection = this.store.selection;
-  readonly connecting = this.store.connecting;
+  readonly nodeSizes = this.store.nodeSizes;
+readonly connecting = this.store.connecting;
   readonly viewport = this.store.viewport;
 
   readonly sceneTransform = computed(() => {
@@ -774,3 +776,7 @@ export class FlowCanvasComponent implements AfterViewInit {
     }
   }
 }
+
+
+
+

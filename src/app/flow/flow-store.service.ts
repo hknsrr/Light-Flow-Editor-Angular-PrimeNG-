@@ -1,4 +1,4 @@
-import { Injectable, computed, signal } from '@angular/core';
+﻿import { Injectable, computed, signal } from '@angular/core';
 import {
   FlowEdge,
   FlowNode,
@@ -84,8 +84,8 @@ export class FlowStore {
   private _dragOrPanCaptured = false;
   private readonly _draggingType = signal<NodeType | null>(null);
   private readonly _fitViewTick = signal(0);
-
-  readonly state = computed(() => this._state());
+  private readonly _nodeSizes = signal<Record<string, { w: number; h: number }>>({});
+readonly state = computed(() => this._state());
 
   readonly nodes = computed(() => this._state().nodes);
   readonly edges = computed(() => this._state().edges);
@@ -95,8 +95,8 @@ export class FlowStore {
   readonly connecting = computed(() => this._state().connecting);
   readonly draggingType = computed(() => this._draggingType());
   readonly fitViewTick = computed(() => this._fitViewTick());
-
-  readonly campaigns = computed(() => MOCK_CAMPAIGNS);
+  readonly nodeSizes = computed(() => this._nodeSizes());
+readonly campaigns = computed(() => MOCK_CAMPAIGNS);
   readonly deliveriesByCampaign = computed(() => MOCK_DELIVERIES_BY_CAMPAIGN);
 
   readonly workflowObject = computed<WorkflowJson>(() => ({
@@ -177,7 +177,17 @@ export class FlowStore {
     this._draggingType.set(type);
   }
 
-  requestFitView() {
+  setNodeSize(nodeId: string, size: { w: number; h: number }) {
+    const w = Math.round(size.w);
+    const h = Math.round(size.h);
+    this._nodeSizes.update((s) => {
+      const prev = s[nodeId];
+      if (prev && prev.w === w && prev.h === h) return s;
+      return { ...s, [nodeId]: { w, h } };
+    });
+  }
+
+requestFitView() {
     this._fitViewTick.update((v) => v + 1);
   }
 
@@ -272,12 +282,12 @@ export class FlowStore {
   setOrientation(orientation: Orientation) {
     if (orientation === this._state().orientation) return;
 
-    // tek undo adımı olsun diye: önce history al, sonra orientation+auto arrange uygula
+    // tek undo adÄ±mÄ± olsun diye: Ã¶nce history al, sonra orientation+auto arrange uygula
     this.captureHistory();
 
     this._state.update((s) => ({ ...s, orientation }));
 
-    // Orientation değişince otomatik arrange
+    // Orientation deÄŸiÅŸince otomatik arrange
     this.autoArrangeInternal();
   }
 
@@ -515,6 +525,8 @@ export class FlowStore {
 function max(a: number, b: number) {
   return a > b ? a : b;
 }
+
+
 
 
 

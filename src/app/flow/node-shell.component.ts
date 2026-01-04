@@ -1,5 +1,18 @@
-﻿import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+﻿import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnDestroy,
+  Output,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FlowStore } from './flow-store.service';
 import { FlowNode, Orientation } from './models';
 
 @Component({
@@ -8,6 +21,7 @@ import { FlowNode, Orientation } from './models';
   imports: [CommonModule],
   template: `
     <div
+      #nodeEl
       class="node"
       [class.sel]="selected"
       [class.delivery]="node.type === 'DELIVERY'"
@@ -201,7 +215,12 @@ import { FlowNode, Orientation } from './models';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NodeShellComponent {
+export class NodeShellComponent implements AfterViewInit, OnDestroy {
+  private readonly store = inject(FlowStore);
+  private readonly zone = inject(NgZone);
+
+  @ViewChild('nodeEl', { static: true }) nodeRef!: ElementRef<HTMLDivElement>;
+
   @Input({ required: true }) node!: FlowNode;
   @Input({ required: true }) orientation: Orientation = 'LR';
   @Input() selected = false;
@@ -210,6 +229,9 @@ export class NodeShellComponent {
   @Output() selectNode = new EventEmitter<string>();
   @Output() startDrag = new EventEmitter<PointerEvent>();
   @Output() startConnect = new EventEmitter<PointerEvent>();
+
+  private resizeObserver: ResizeObserver | null = null;
+  private lastSize: { w: number; h: number } | null = null;
 
   get title(): string {
     switch (this.node.type) {
@@ -233,6 +255,31 @@ export class NodeShellComponent {
     }
   }
 
+  ngAfterViewInit() {
+    const el = this.nodeRef.nativeElement;
+    this.updateSize(el.offsetWidth, el.offsetHeight);
+
+    this.zone.runOutsideAngular(() => {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.zone.run(() => this.updateSize(el.offsetWidth, el.offsetHeight));
+      });
+      this.resizeObserver.observe(el);
+    });
+  }
+
+  ngOnDestroy() {
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
+  }
+
+  private updateSize(width: number, height: number) {
+    const w = Math.round(width);
+    const h = Math.round(height);
+    if (this.lastSize && this.lastSize.w === w && this.lastSize.h === h) return;
+    this.lastSize = { w, h };
+    this.store.setNodeSize(this.node.id, { w, h });
+  }
+
   onNodePointerDown(ev: PointerEvent) {
     this.selectNode.emit(this.node.id);
 
@@ -252,3 +299,4 @@ export class NodeShellComponent {
     ev.stopPropagation();
   }
 }
+

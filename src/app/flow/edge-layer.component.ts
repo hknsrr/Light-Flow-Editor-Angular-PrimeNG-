@@ -61,6 +61,7 @@ function clamp(v: number, a: number, b: number) {
       .edge.preview {
         stroke-dasharray: 6 5;
         stroke-width: 2.2;
+        stroke: var(--edge-preview, var(--edge));
         opacity: 0.95;
       }
 
@@ -88,6 +89,7 @@ export class EdgeLayerComponent {
   @Input({ required: true }) edges: FlowEdge[] = [];
   @Input({ required: true }) orientation: Orientation = 'LR';
   @Input({ required: true }) selection: Selection = { nodeIds: [], edgeIds: [] };
+  @Input({ required: true }) nodeSizes: Record<string, { w: number; h: number }> = {};
 
   @Input({ required: true }) worldTransform = 'translate(0 0) scale(1)';
 
@@ -106,17 +108,22 @@ export class EdgeLayerComponent {
     return new Map(this.nodes.map((n) => [n.id, n]));
   }
 
+  private nodeSize(node: FlowNode): { w: number; h: number } {
+    return this.nodeSizes[node.id] ?? { w: NODE_W, h: NODE_H };
+  }
+
   private portPos(node: FlowNode, port: 'in' | 'out'): Pt {
     const x = node.position.x;
     const y = node.position.y;
+    const size = this.nodeSize(node);
 
     if (this.orientation === 'LR') {
-      const px = port === 'in' ? x : x + NODE_W;
-      const py = y + NODE_H / 2;
+      const px = port === 'in' ? x : x + size.w;
+      const py = y + size.h / 2;
       return { x: px, y: py };
     } else {
-      const px = x + NODE_W / 2;
-      const py = port === 'in' ? y : y + NODE_H;
+      const px = x + size.w / 2;
+      const py = port === 'in' ? y : y + size.h;
       return { x: px, y: py };
     }
   }
@@ -171,3 +178,4 @@ export class EdgeLayerComponent {
     this.selectEdge.emit(edgeId);
   }
 }
+
