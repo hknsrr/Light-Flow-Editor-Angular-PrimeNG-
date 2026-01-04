@@ -10,7 +10,7 @@ import { NodeType } from './models';
       <div class="title">Palette</div>
       <div class="sub">Drag onto canvas</div>
 
-      <div class="item" draggable="true" (dragstart)="onDragStart($event, 'DELIVERY')" (dragend)="onDragEnd()">
+      <div class="item delivery" draggable="true" (dragstart)="onDragStart($event, 'DELIVERY')" (dragend)="onDragEnd()">
         <div class="icon"><i class="pi pi-send" aria-hidden="true"></i></div>
         <div>
           <div class="name">Delivery</div>
@@ -18,7 +18,7 @@ import { NodeType } from './models';
         </div>
       </div>
 
-      <div class="item" draggable="true" (dragstart)="onDragStart($event, 'TIMER')" (dragend)="onDragEnd()">
+      <div class="item timer" draggable="true" (dragstart)="onDragStart($event, 'TIMER')" (dragend)="onDragEnd()">
         <div class="icon"><i class="pi pi-clock" aria-hidden="true"></i></div>
         <div>
           <div class="name">Timer</div>
@@ -26,7 +26,7 @@ import { NodeType } from './models';
         </div>
       </div>
 
-      <div class="item" draggable="true" (dragstart)="onDragStart($event, 'EVENT')" (dragend)="onDragEnd()">
+      <div class="item event" draggable="true" (dragstart)="onDragStart($event, 'EVENT')" (dragend)="onDragEnd()">
         <div class="icon"><i class="pi pi-bolt" aria-hidden="true"></i></div>
         <div>
           <div class="name">Event</div>
@@ -71,6 +71,15 @@ import { NodeType } from './models';
       .item:active {
         cursor: grabbing;
       }
+      .item.delivery {
+        border-color: var(--accent-delivery-border);
+      }
+      .item.timer {
+        border-color: var(--accent-timer-border);
+      }
+      .item.event {
+        border-color: var(--accent-event-border);
+      }
       .icon {
         width: 34px;
         height: 34px;
@@ -80,10 +89,35 @@ import { NodeType } from './models';
         background: var(--palette-icon-bg);
         border: 1px solid var(--palette-icon-border);
         font-size: 16px;
+        color: var(--text);
+      }
+      .item.delivery .icon {
+        background: var(--accent-delivery-soft);
+        border-color: var(--accent-delivery-border);
+        color: var(--accent-delivery);
+      }
+      .item.timer .icon {
+        background: var(--accent-timer-soft);
+        border-color: var(--accent-timer-border);
+        color: var(--accent-timer);
+      }
+      .item.event .icon {
+        background: var(--accent-event-soft);
+        border-color: var(--accent-event-border);
+        color: var(--accent-event);
       }
       .name {
         font-weight: 700;
         font-size: 13px;
+      }
+      .item.delivery .name {
+        color: var(--accent-delivery);
+      }
+      .item.timer .name {
+        color: var(--accent-timer);
+      }
+      .item.event .name {
+        color: var(--accent-event);
       }
       .desc {
         font-size: 12px;
@@ -116,7 +150,3 @@ export class PaletteComponent {
     this.store.setDraggingType(null);
   }
 }
-
-
-
-

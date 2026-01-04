@@ -10,6 +10,9 @@ import { FlowNode, Orientation } from './models';
     <div
       class="node"
       [class.sel]="selected"
+      [class.delivery]="node.type === 'DELIVERY'"
+      [class.timer]="node.type === 'TIMER'"
+      [class.event]="node.type === 'EVENT'"
       [style.transform]="'translate(' + node.position.x + 'px,' + node.position.y + 'px)'"
       (pointerdown)="onNodePointerDown($event)"
     >
@@ -64,6 +67,27 @@ import { FlowNode, Orientation } from './models';
         overflow: visible;
         user-select: none;
         z-index: 1;
+        --node-accent: var(--accent-delivery);
+        --node-accent-soft: var(--accent-delivery-soft);
+        --node-accent-border: var(--accent-delivery-border);
+      }
+
+      .node.delivery {
+        --node-accent: var(--accent-delivery);
+        --node-accent-soft: var(--accent-delivery-soft);
+        --node-accent-border: var(--accent-delivery-border);
+      }
+
+      .node.timer {
+        --node-accent: var(--accent-timer);
+        --node-accent-soft: var(--accent-timer-soft);
+        --node-accent-border: var(--accent-timer-border);
+      }
+
+      .node.event {
+        --node-accent: var(--accent-event);
+        --node-accent-soft: var(--accent-event-soft);
+        --node-accent-border: var(--accent-event-border);
       }
 
       .node.sel {
@@ -78,8 +102,8 @@ import { FlowNode, Orientation } from './models';
         align-items: center;
         justify-content: space-between;
         padding: 0 10px;
-        background: var(--node-header-bg);
-        border-bottom: 1px solid var(--node-header-border);
+        background: linear-gradient(135deg, var(--node-accent-soft), var(--node-header-bg));
+        border-bottom: 1px solid var(--node-accent-border);
         cursor: grab;
       }
 
@@ -100,8 +124,9 @@ import { FlowNode, Orientation } from './models';
         display: grid;
         place-items: center;
         border-radius: 8px;
-        background: var(--node-icon-bg);
-        border: 1px solid var(--node-icon-border);
+        background: var(--node-accent-soft);
+        border: 1px solid var(--node-accent-border);
+        color: var(--node-accent);
       }
 
       .emoji i {
