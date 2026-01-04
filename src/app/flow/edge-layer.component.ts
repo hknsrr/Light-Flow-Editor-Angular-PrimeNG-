@@ -28,7 +28,7 @@ function clamp(v: number, a: number, b: number) {
       <g [attr.transform]="worldTransform">
         <ng-container *ngFor="let e of edges">
           <path class="hit" [attr.d]="pathForEdge(e)" (pointerdown)="onEdgeDown($event, e.id)"></path>
-          <path class="edge" [class.sel]="isSelectedEdge(e.id)" [attr.d]="pathForEdge(e)"></path>
+          <path class="edge" [attr.d]="pathForEdge(e)" [attr.stroke]="edgeStroke(e)" [attr.filter]="edgeFilter(e)"></path>
         </ng-container>
 
         <ng-container *ngIf="connecting">
@@ -54,16 +54,9 @@ function clamp(v: number, a: number, b: number) {
       .edge {
         pointer-events: none;
         fill: none;
-        stroke: rgba(255, 255, 255, 0.75);
         stroke-width: 2.2;
         filter: none;
-      }
-
-      .edge.sel {
-        stroke: rgba(52, 211, 153, 0.95);
-        filter: url(#glow);
-      }
-
+      }\r\n
       .edge.preview {
         stroke-dasharray: 6 5;
         stroke-width: 2.2;
@@ -158,8 +151,17 @@ export class EdgeLayerComponent {
     return this.bezier(this.portPos(from, 'out'), c.toPoint);
   }
 
-  isSelectedEdge(edgeId: string): boolean {
-    return this.selection.edgeIds.includes(edgeId);
+  isSelectedEdge(edge: FlowEdge): boolean {
+    if (this.selection.edgeIds.includes(edge.id)) return true;
+    return this.selection.nodeIds.includes(edge.from.nodeId) && this.selection.nodeIds.includes(edge.to.nodeId);
+  }
+
+  edgeStroke(edge: FlowEdge): string {
+    return this.isSelectedEdge(edge) ? 'rgba(52, 211, 153, 0.95)' : 'rgba(255, 255, 255, 0.75)';
+  }
+
+  edgeFilter(edge: FlowEdge): string | null {
+    return this.isSelectedEdge(edge) ? 'url(#glow)' : null;
   }
 
   onEdgeDown(ev: PointerEvent, edgeId: string) {
@@ -168,4 +170,6 @@ export class EdgeLayerComponent {
     this.selectEdge.emit(edgeId);
   }
 }
+
+
 

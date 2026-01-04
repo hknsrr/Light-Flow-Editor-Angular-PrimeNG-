@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FlowStore } from './flow-store.service';
+import { ConfirmationService } from 'primeng/api';
 import { Orientation } from './models';
 
 @Component({
@@ -60,6 +61,15 @@ import { Orientation } from './models';
           (click)="store.autoArrange()"
           class="p-button-sm p-button-secondary"
         ></button>
+
+        <button
+          pButton
+          type="button"
+          label="Clear"
+          icon="pi pi-trash"
+          (click)="confirmClear()"
+          class="p-button-sm p-button-danger"
+        ></button>
       </div>
 
       <div class="hint">
@@ -112,6 +122,7 @@ import { Orientation } from './models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolbarComponent {
+  private readonly confirm = inject(ConfirmationService);
   readonly store = inject(FlowStore);
 
   readonly orientation = this.store.orientation;
@@ -140,7 +151,21 @@ export class ToolbarComponent {
   setOrientation(o: Orientation) {
     this.store.setOrientation(o);
   }
+
+  confirmClear() {
+    this.confirm.confirm({
+      header: 'Confirm',
+      message: 'Clear the canvas? This will remove all nodes and edges.',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Clear',
+      rejectLabel: 'Cancel',
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-secondary',
+      accept: () => this.store.clearFlow()
+    });
+  }
 }
+
 
 
 

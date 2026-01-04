@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FlowStore } from './flow/flow-store.service';
 import { PaletteComponent } from './flow/palette.component';
 import { ToolbarComponent } from './flow/toolbar.component';
@@ -9,9 +10,10 @@ import { DebugPanelComponent } from './flow/debug-panel.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ToastModule, PaletteComponent, ToolbarComponent, FlowCanvasComponent, DebugPanelComponent],
+  imports: [ToastModule, ConfirmDialogModule, PaletteComponent, ToolbarComponent, FlowCanvasComponent, DebugPanelComponent],
   template: `
     <p-toast></p-toast>
+    <p-confirmDialog></p-confirmDialog>
 
     <div class="app">
       <div class="left">
@@ -63,3 +65,4 @@ export class AppComponent {
     }
   }
 }
+

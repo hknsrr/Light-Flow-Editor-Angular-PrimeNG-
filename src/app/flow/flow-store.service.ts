@@ -190,6 +190,12 @@ export class FlowStore {
     this.setSelection({ nodeIds: [], edgeIds: [edgeId] });
   }
 
+  clearFlow() {
+    const s = this._state();
+    if (s.nodes.length === 0 && s.edges.length === 0) return;
+    this.captureHistory();
+    this._state.update((st) => ({ ...st, nodes: [], edges: [], selection: { nodeIds: [], edgeIds: [] }, connecting: null }));
+  }
   addNode(type: NodeType, position: { x: number; y: number }) {
     this.captureHistory();
     const id = `n${this._idSeq++}`;
@@ -503,6 +509,7 @@ export class FlowStore {
 function max(a: number, b: number) {
   return a > b ? a : b;
 }
+
 
 
 
