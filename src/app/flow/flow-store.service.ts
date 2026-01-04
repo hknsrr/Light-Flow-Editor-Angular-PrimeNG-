@@ -83,6 +83,7 @@ export class FlowStore {
   private readonly _redo = signal<DomainState[]>([]);
   private _dragOrPanCaptured = false;
   private readonly _draggingType = signal<NodeType | null>(null);
+  private readonly _fitViewTick = signal(0);
 
   readonly state = computed(() => this._state());
 
@@ -93,6 +94,7 @@ export class FlowStore {
   readonly selection = computed(() => this._state().selection);
   readonly connecting = computed(() => this._state().connecting);
   readonly draggingType = computed(() => this._draggingType());
+  readonly fitViewTick = computed(() => this._fitViewTick());
 
   readonly campaigns = computed(() => MOCK_CAMPAIGNS);
   readonly deliveriesByCampaign = computed(() => MOCK_DELIVERIES_BY_CAMPAIGN);
@@ -173,6 +175,10 @@ export class FlowStore {
 
   setDraggingType(type: NodeType | null) {
     this._draggingType.set(type);
+  }
+
+  requestFitView() {
+    this._fitViewTick.update((v) => v + 1);
   }
 
   setSelection(sel: Selection) {
@@ -509,6 +515,7 @@ export class FlowStore {
 function max(a: number, b: number) {
   return a > b ? a : b;
 }
+
 
 
 

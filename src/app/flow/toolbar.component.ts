@@ -19,6 +19,15 @@ import { Orientation } from './models';
         <button
           pButton
           type="button"
+          label="Fit View"
+          icon="pi pi-arrows-alt"
+          (click)="fitView()"
+          class="p-button-sm p-button-secondary"
+        ></button>
+
+        <button
+          pButton
+          type="button"
           label="Reset View"
           (click)="resetView()"
           class="p-button-sm p-button-secondary"
@@ -148,6 +157,10 @@ export class ToolbarComponent {
     this.store.setViewport({ panX: 40, panY: 40, zoom: 1 }, true);
   }
 
+  fitView() {
+    this.store.requestFitView();
+  }
+
   setOrientation(o: Orientation) {
     this.store.setOrientation(o);
   }
@@ -165,6 +178,7 @@ export class ToolbarComponent {
     });
   }
 }
+
 
 
 

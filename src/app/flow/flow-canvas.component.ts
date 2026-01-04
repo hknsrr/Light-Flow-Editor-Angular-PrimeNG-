@@ -1,11 +1,13 @@
 import {
   ChangeDetectionStrategy,
+  AfterViewInit,
   Component,
   ElementRef,
   HostListener,
   NgZone,
   ViewChild,
   computed,
+  effect,
   inject,
   signal
 } from '@angular/core';
@@ -222,9 +224,15 @@ type DragPreview = {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FlowCanvasComponent {
+export class FlowCanvasComponent implements AfterViewInit {
   private readonly store = inject(FlowStore);
   private readonly zone = inject(NgZone);
+
+  private readonly fitViewEffect = effect(() => {
+    this.store.fitViewTick();
+    if (!this.viewReady) return;
+    this.fitToView();
+  }, { allowSignalWrites: true });
 
   @ViewChild('root', { static: true }) rootRef!: ElementRef<HTMLDivElement>;
 
@@ -254,6 +262,8 @@ export class FlowCanvasComponent {
   private nodeDragActive: { nodeId: string; start: Pt; nodePos: Pt } | null = null;
 
   private connectPointerId: number | null = null;
+  private didInitialFit = false;
+  private viewReady = false;
 
   private marqueeActive = false;
   private marqueeStart: Pt | null = null;
@@ -302,6 +312,48 @@ export class FlowCanvasComponent {
   worldFromClient(clientX: number, clientY: number): Pt {
     const screen = this.screenFromClient(clientX, clientY);
     return this.worldFromScreen(screen.x, screen.y);
+  }
+
+  ngAfterViewInit() {
+    this.viewReady = true;
+    if (this.didInitialFit) return;
+    this.didInitialFit = true;
+    this.fitToView();
+  }
+
+  private fitToView() {
+    const nodes = this.nodes();
+    if (!nodes.length) return;
+
+    const root = this.rootRef.nativeElement.getBoundingClientRect();
+    if (root.width <= 0 || root.height <= 0) return;
+
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+
+    for (const n of nodes) {
+      minX = Math.min(minX, n.position.x);
+      minY = Math.min(minY, n.position.y);
+      maxX = Math.max(maxX, n.position.x + NODE_W);
+      maxY = Math.max(maxY, n.position.y + NODE_H);
+    }
+
+    const contentW = maxX - minX;
+    const contentH = maxY - minY;
+    if (contentW <= 0 || contentH <= 0) return;
+
+    const padding = 60;
+    const scaleX = (root.width - padding * 2) / contentW;
+    const scaleY = (root.height - padding * 2) / contentH;
+    let zoom = Math.min(scaleX, scaleY, 1);
+    zoom = Math.max(0.4, Math.min(zoom, 1));
+
+    const panX = (root.width - contentW * zoom) / 2 - minX * zoom;
+    const panY = (root.height - contentH * zoom) / 2 - minY * zoom;
+
+    this.store.setViewport({ panX, panY, zoom }, false);
   }
 
   private dragTypeFromEvent(ev: DragEvent): NodeType | null {
@@ -731,6 +783,10 @@ export class FlowCanvasComponent {
     }
   }
 }
+
+
+
+
 
 
 
