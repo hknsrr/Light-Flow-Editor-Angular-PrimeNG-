@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FlowStore } from './flow-store.service';
 import { NodeType } from './models';
 
@@ -11,7 +11,7 @@ import { NodeType } from './models';
       <div class="sub">Drag onto canvas</div>
 
       <div class="item" draggable="true" (dragstart)="onDragStart($event, 'DELIVERY')" (dragend)="onDragEnd()">
-        <div class="icon">📦</div>
+        <div class="icon"><i class="pi pi-send" aria-hidden="true"></i></div>
         <div>
           <div class="name">Delivery</div>
           <div class="desc">Campaign + delivery</div>
@@ -19,7 +19,7 @@ import { NodeType } from './models';
       </div>
 
       <div class="item" draggable="true" (dragstart)="onDragStart($event, 'TIMER')" (dragend)="onDragEnd()">
-        <div class="icon">⏱️</div>
+        <div class="icon"><i class="pi pi-clock" aria-hidden="true"></i></div>
         <div>
           <div class="name">Timer</div>
           <div class="desc">After X units</div>
@@ -27,7 +27,7 @@ import { NodeType } from './models';
       </div>
 
       <div class="item" draggable="true" (dragstart)="onDragStart($event, 'EVENT')" (dragend)="onDragEnd()">
-        <div class="icon">🟣</div>
+        <div class="icon"><i class="pi pi-bolt" aria-hidden="true"></i></div>
         <div>
           <div class="name">Event</div>
           <div class="desc">clicked/opened</div>
@@ -63,8 +63,8 @@ import { NodeType } from './models';
         align-items: center;
         padding: 10px;
         border-radius: 12px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--palette-item-bg);
+        border: 1px solid var(--palette-item-border);
         cursor: grab;
         user-select: none;
       }
@@ -77,8 +77,8 @@ import { NodeType } from './models';
         display: grid;
         place-items: center;
         border-radius: 10px;
-        background: rgba(0, 0, 0, 0.25);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--palette-icon-bg);
+        border: 1px solid var(--palette-icon-border);
         font-size: 16px;
       }
       .name {
@@ -92,7 +92,7 @@ import { NodeType } from './models';
       .footer {
         margin-top: auto;
         padding-top: 8px;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-top: 1px solid var(--palette-footer-border);
       }
       .tip {
         font-size: 12px;
@@ -116,5 +116,7 @@ export class PaletteComponent {
     this.store.setDraggingType(null);
   }
 }
+
+
 
 

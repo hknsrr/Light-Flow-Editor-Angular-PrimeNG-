@@ -1,16 +1,18 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { FlowStore } from './flow-store.service';
 import { ConfirmationService } from 'primeng/api';
 import { Orientation } from './models';
+import { ThemeService } from '../theme.service';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonModule, SelectButtonModule],
+  imports: [CommonModule, FormsModule, ButtonModule, SelectButtonModule, InputSwitchModule],
   template: `
     <div class="bar">
       <div class="group">
@@ -81,6 +83,11 @@ import { Orientation } from './models';
         ></button>
       </div>
 
+      <div class="group theme-toggle">
+        <span>Light mode</span>
+        <p-inputSwitch [ngModel]="isLight()" (ngModelChange)="setLight($event)"></p-inputSwitch>
+      </div>
+
       <div class="hint">
         <span class="kbd">Space</span> + drag to pan | Middle mouse drag to pan | Wheel to zoom | Del to delete | Drag to box-select and delete
       </div>
@@ -95,8 +102,8 @@ import { Orientation } from './models';
         gap: 10px;
         padding: 8px;
         border-radius: 12px;
-        background: rgba(0, 0, 0, 0.35);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--toolbar-bg);
+        border: 1px solid var(--toolbar-border);
         backdrop-filter: blur(6px);
       }
       .group {
@@ -104,6 +111,10 @@ import { Orientation } from './models';
         flex-wrap: wrap;
         align-items: center;
         gap: 6px;
+      }
+      .theme-toggle {
+        font-size: 12px;
+        opacity: 0.9;
       }
       .hint {
         margin-left: 0;
@@ -119,10 +130,10 @@ import { Orientation } from './models';
       .kbd {
         display: inline-block;
         padding: 1px 6px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-bottom-color: rgba(255, 255, 255, 0.25);
+        border: 1px solid var(--kbd-border);
+        border-bottom-color: var(--kbd-border-strong);
         border-radius: 6px;
-        background: rgba(255, 255, 255, 0.06);
+        background: var(--kbd-bg);
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
           monospace;
       }
@@ -133,10 +144,12 @@ import { Orientation } from './models';
 export class ToolbarComponent {
   private readonly confirm = inject(ConfirmationService);
   readonly store = inject(FlowStore);
+  readonly theme = inject(ThemeService);
 
   readonly orientation = this.store.orientation;
   readonly canUndo = this.store.canUndo;
   readonly canRedo = this.store.canRedo;
+  readonly isLight = this.theme.isLight;
 
   orientationOptions: Array<{ label: string; value: Orientation }> = [
     { label: 'LR', value: 'LR' },
@@ -177,9 +190,8 @@ export class ToolbarComponent {
       accept: () => this.store.clearFlow()
     });
   }
+
+  setLight(isLight: boolean) {
+    this.theme.setLight(!!isLight);
+  }
 }
-
-
-
-
-

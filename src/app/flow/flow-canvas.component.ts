@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild, computed, effect, inject, signal, untracked } from '@angular/core';
+﻿import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild, computed, effect, inject, signal, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlowStore } from './flow-store.service';
 import { EdgeLayerComponent } from './edge-layer.component';
@@ -113,10 +113,10 @@ type DragPreview = {
       .grid {
         position: absolute;
         inset: 0;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+        background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
         background-size: 28px 28px;
-        opacity: 0.35;
+        opacity: var(--grid-opacity);
         transform: translateZ(0);
         pointer-events: none;
       }
@@ -135,49 +135,50 @@ type DragPreview = {
         z-index: 2;
       }
 
-        .drag-preview {
-          position: absolute;
-          width: ${NODE_W}px;
-          height: ${NODE_H}px;
-          border-radius: 14px;
-          border: 1px dashed rgba(148, 163, 184, 0.75);
-          background: linear-gradient(145deg, rgba(15, 23, 42, 0.18), rgba(148, 163, 184, 0.08));
-          color: rgba(226, 232, 240, 0.9);
-          font-size: 11px;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          display: grid;
-          place-items: center;
-          pointer-events: none;
-          opacity: 0.6;
-          box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28), inset 0 0 0 1px rgba(148, 163, 184, 0.12);
-        }
+      .drag-preview {
+        position: absolute;
+        width: ${NODE_W}px;
+        height: ${NODE_H}px;
+        border-radius: 14px;
+        border: 1px dashed var(--drag-preview-border);
+        background: var(--drag-preview-bg);
+        color: var(--drag-preview-text);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+        opacity: 0.6;
+        box-shadow: var(--drag-preview-shadow);
+      }
 
-        .drag-preview[data-type='DELIVERY'] {
-          border-color: rgba(52, 211, 153, 0.7);
-          color: rgba(52, 211, 153, 0.95);
-          background: linear-gradient(145deg, rgba(16, 185, 129, 0.16), rgba(15, 23, 42, 0.14));
-        }
+      .drag-preview[data-type='DELIVERY'] {
+        border-color: var(--drag-delivery-border);
+        color: var(--drag-delivery-text);
+        background: var(--drag-delivery-bg);
+      }
 
-        .drag-preview[data-type='TIMER'] {
-          border-color: rgba(251, 191, 36, 0.75);
-          color: rgba(251, 191, 36, 0.95);
-          background: linear-gradient(145deg, rgba(251, 191, 36, 0.14), rgba(15, 23, 42, 0.14));
-        }
+      .drag-preview[data-type='TIMER'] {
+        border-color: var(--drag-timer-border);
+        color: var(--drag-timer-text);
+        background: var(--drag-timer-bg);
+      }
 
-        .drag-preview[data-type='EVENT'] {
-          border-color: rgba(56, 189, 248, 0.75);
-          color: rgba(56, 189, 248, 0.95);
-          background: linear-gradient(145deg, rgba(56, 189, 248, 0.14), rgba(15, 23, 42, 0.14));
-        }
-        .marquee {
-          position: absolute;
-          border: 1px solid rgba(52, 211, 153, 0.85);
-          background: rgba(52, 211, 153, 0.12);
-          box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset;
-          pointer-events: none;
-          z-index: 4;
-        }
+      .drag-preview[data-type='EVENT'] {
+        border-color: var(--drag-event-border);
+        color: var(--drag-event-text);
+        background: var(--drag-event-bg);
+      }
+
+      .marquee {
+        position: absolute;
+        border: 1px solid var(--marquee-border);
+        background: var(--marquee-bg);
+        box-shadow: var(--marquee-shadow);
+        pointer-events: none;
+        z-index: 4;
+      }
 
       .watermark {
         position: absolute;
@@ -185,8 +186,9 @@ type DragPreview = {
         bottom: 12px;
         padding: 8px 10px;
         border-radius: 12px;
-        background: rgba(0, 0, 0, 0.35);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--watermark-bg);
+        border: 1px solid var(--watermark-border);
+        color: var(--text);
         font-size: 12px;
         opacity: 0.85;
         pointer-events: none;
@@ -772,19 +774,3 @@ export class FlowCanvasComponent implements AfterViewInit {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

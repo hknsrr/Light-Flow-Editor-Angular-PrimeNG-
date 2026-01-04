@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
@@ -63,8 +63,8 @@ import { FlowNode, TimerUnit } from '../models';
         margin-top: 10px;
         padding: 8px 10px;
         border-radius: 12px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--label-bg);
+        border: 1px solid var(--label-border);
         font-size: 12px;
         display: flex;
         gap: 8px;
@@ -74,8 +74,8 @@ import { FlowNode, TimerUnit } from '../models';
         font-size: 11px;
         padding: 2px 8px;
         border-radius: 999px;
-        background: rgba(0, 0, 0, 0.25);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--pill-bg);
+        border: 1px solid var(--pill-border);
         opacity: 0.9;
       }
       :host ::ng-deep .w-full {
@@ -126,3 +126,4 @@ export class TimerNodeComponent {
     this.store.updateNodeData(this.node.id, { unit: u }, true);
   }
 }
+

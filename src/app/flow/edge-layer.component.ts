@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlowEdge, FlowNode, NODE_H, NODE_W, Orientation, Selection } from './models';
 
@@ -56,7 +56,8 @@ function clamp(v: number, a: number, b: number) {
         fill: none;
         stroke-width: 2.2;
         filter: none;
-      }\r\n
+      }
+
       .edge.preview {
         stroke-dasharray: 6 5;
         stroke-width: 2.2;
@@ -64,11 +65,11 @@ function clamp(v: number, a: number, b: number) {
       }
 
       .edge.preview.ok {
-        stroke: rgba(52, 211, 153, 0.95);
+        stroke: var(--edge-preview-ok);
       }
 
       .edge.preview.bad {
-        stroke: rgba(248, 113, 113, 0.95);
+        stroke: var(--edge-preview-bad);
       }
 
       .hit {
@@ -157,7 +158,7 @@ export class EdgeLayerComponent {
   }
 
   edgeStroke(edge: FlowEdge): string {
-    return this.isSelectedEdge(edge) ? 'rgba(52, 211, 153, 0.95)' : 'rgba(255, 255, 255, 0.75)';
+    return this.isSelectedEdge(edge) ? 'var(--edge-selected)' : 'var(--edge)';
   }
 
   edgeFilter(edge: FlowEdge): string | null {
@@ -170,6 +171,3 @@ export class EdgeLayerComponent {
     this.selectEdge.emit(edgeId);
   }
 }
-
-
-

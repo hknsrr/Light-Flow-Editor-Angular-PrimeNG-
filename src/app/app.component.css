@@ -1,4 +1,4 @@
-.app {
+﻿.app {
   height: 100vh;
   display: grid;
   grid-template-columns: 240px 1fr 420px;
@@ -14,21 +14,21 @@
 }
 
 .left {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
   overflow: auto;
 }
 
 .center {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--panel-bg-soft);
+  border: 1px solid var(--panel-border);
   overflow: hidden;
   position: relative;
 }
 
 .right {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
   overflow: hidden;
 }
 

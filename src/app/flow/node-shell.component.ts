@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlowNode, Orientation } from './models';
 
@@ -15,7 +15,7 @@ import { FlowNode, Orientation } from './models';
     >
       <div class="header node-drag-handle">
         <div class="left">
-          <span class="emoji">{{ icon }}</span>
+          <span class="emoji"><i [class]="icon" aria-hidden="true"></i></span>
           <span class="title">{{ title }}</span>
         </div>
 
@@ -46,9 +46,9 @@ import { FlowNode, Orientation } from './models';
         (pointerdown)="onOutputPortDown($event)"
       ></div>
 
-  <div class="body flow-node-content">
-  <ng-content></ng-content>
-</div>
+      <div class="body flow-node-content">
+        <ng-content></ng-content>
+      </div>
     </div>
   `,
   styles: [
@@ -58,17 +58,17 @@ import { FlowNode, Orientation } from './models';
         width: 240px;
         min-height: 150px;
         border-radius: 14px;
-        background: rgba(15, 23, 42, 0.88);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        background: var(--node-bg);
+        border: 1px solid var(--node-border);
+        box-shadow: var(--node-shadow);
         overflow: visible;
         user-select: none;
         z-index: 1;
       }
 
       .node.sel {
-        border-color: rgba(52, 211, 153, 0.9);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        border-color: var(--node-selected-border);
+        box-shadow: var(--node-selected-shadow);
         z-index: 5;
       }
 
@@ -78,8 +78,8 @@ import { FlowNode, Orientation } from './models';
         align-items: center;
         justify-content: space-between;
         padding: 0 10px;
-        background: rgba(255, 255, 255, 0.06);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--node-header-bg);
+        border-bottom: 1px solid var(--node-header-border);
         cursor: grab;
       }
 
@@ -100,8 +100,12 @@ import { FlowNode, Orientation } from './models';
         display: grid;
         place-items: center;
         border-radius: 8px;
-        background: rgba(0, 0, 0, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--node-icon-bg);
+        border: 1px solid var(--node-icon-border);
+      }
+
+      .emoji i {
+        font-size: 13px;
       }
 
       .title {
@@ -125,9 +129,9 @@ import { FlowNode, Orientation } from './models';
         width: 14px;
         height: 14px;
         border-radius: 999px;
-        background: rgba(52, 211, 153, 0.95);
-        border: 2px solid rgba(0, 0, 0, 0.35);
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+        background: var(--port-bg);
+        border: 2px solid var(--port-border);
+        box-shadow: var(--port-shadow);
         cursor: crosshair;
       }
 
@@ -161,12 +165,12 @@ import { FlowNode, Orientation } from './models';
       }
 
       .port.in.hover-ok {
-        box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.35), 0 0 18px rgba(52, 211, 153, 0.65);
+        box-shadow: var(--port-hover-ok-shadow);
       }
 
       .port.in.hover-bad {
-        background: rgba(248, 113, 113, 0.95);
-        box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.28), 0 0 18px rgba(248, 113, 113, 0.6);
+        background: var(--port-hover-bad-bg);
+        box-shadow: var(--port-hover-bad-shadow);
       }
     `
   ],
@@ -196,11 +200,11 @@ export class NodeShellComponent {
   get icon(): string {
     switch (this.node.type) {
       case 'DELIVERY':
-        return '📦';
+        return 'pi pi-send';
       case 'TIMER':
-        return '⏱️';
+        return 'pi pi-clock';
       case 'EVENT':
-        return '🟣';
+        return 'pi pi-bolt';
     }
   }
 

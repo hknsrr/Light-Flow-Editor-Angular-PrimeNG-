@@ -1,3 +1,147 @@
+﻿:root {
+  --color-scheme: dark;
+  --bg: #0b1220;
+  --text: #e5e7eb;
+  --text-muted: rgba(229, 231, 235, 0.7);
+  --panel-bg: rgba(255, 255, 255, 0.04);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --panel-bg-soft: rgba(255, 255, 255, 0.03);
+  --panel-bg-strong: rgba(255, 255, 255, 0.05);
+  --toolbar-bg: rgba(0, 0, 0, 0.35);
+  --toolbar-border: rgba(255, 255, 255, 0.08);
+  --grid-line: rgba(255, 255, 255, 0.06);
+  --grid-opacity: 0.35;
+  --node-bg: rgba(15, 23, 42, 0.88);
+  --node-border: rgba(255, 255, 255, 0.12);
+  --node-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --node-selected-border: rgba(52, 211, 153, 0.9);
+  --node-selected-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --node-header-bg: rgba(255, 255, 255, 0.06);
+  --node-header-border: rgba(255, 255, 255, 0.08);
+  --node-icon-bg: rgba(0, 0, 0, 0.2);
+  --node-icon-border: rgba(255, 255, 255, 0.1);
+  --port-bg: rgba(52, 211, 153, 0.95);
+  --port-border: rgba(0, 0, 0, 0.35);
+  --port-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+  --port-hover-ok-shadow: 0 0 0 4px rgba(52, 211, 153, 0.35), 0 0 18px rgba(52, 211, 153, 0.65);
+  --port-hover-bad-bg: rgba(248, 113, 113, 0.95);
+  --port-hover-bad-shadow: 0 0 0 4px rgba(248, 113, 113, 0.28), 0 0 18px rgba(248, 113, 113, 0.6);
+  --edge: rgba(255, 255, 255, 0.75);
+  --edge-selected: rgba(52, 211, 153, 0.95);
+  --edge-preview-ok: rgba(52, 211, 153, 0.95);
+  --edge-preview-bad: rgba(248, 113, 113, 0.95);
+  --drag-preview-border: rgba(148, 163, 184, 0.75);
+  --drag-preview-bg: linear-gradient(145deg, rgba(15, 23, 42, 0.18), rgba(148, 163, 184, 0.08));
+  --drag-preview-text: rgba(226, 232, 240, 0.9);
+  --drag-preview-shadow: 0 10px 26px rgba(0, 0, 0, 0.28), inset 0 0 0 1px rgba(148, 163, 184, 0.12);
+  --drag-delivery-border: rgba(52, 211, 153, 0.7);
+  --drag-delivery-text: rgba(52, 211, 153, 0.95);
+  --drag-delivery-bg: linear-gradient(145deg, rgba(16, 185, 129, 0.16), rgba(15, 23, 42, 0.14));
+  --drag-timer-border: rgba(251, 191, 36, 0.75);
+  --drag-timer-text: rgba(251, 191, 36, 0.95);
+  --drag-timer-bg: linear-gradient(145deg, rgba(251, 191, 36, 0.14), rgba(15, 23, 42, 0.14));
+  --drag-event-border: rgba(56, 189, 248, 0.75);
+  --drag-event-text: rgba(56, 189, 248, 0.95);
+  --drag-event-bg: linear-gradient(145deg, rgba(56, 189, 248, 0.14), rgba(15, 23, 42, 0.14));
+  --marquee-border: rgba(52, 211, 153, 0.85);
+  --marquee-bg: rgba(52, 211, 153, 0.12);
+  --marquee-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset;
+  --watermark-bg: rgba(0, 0, 0, 0.35);
+  --watermark-border: rgba(255, 255, 255, 0.08);
+  --palette-item-bg: rgba(255, 255, 255, 0.05);
+  --palette-item-border: rgba(255, 255, 255, 0.08);
+  --palette-icon-bg: rgba(0, 0, 0, 0.25);
+  --palette-icon-border: rgba(255, 255, 255, 0.08);
+  --palette-footer-border: rgba(255, 255, 255, 0.08);
+  --debug-bg: rgba(0, 0, 0, 0.25);
+  --debug-border: rgba(255, 255, 255, 0.08);
+  --debug-json: #e5e7eb;
+  --debug-error-bg: rgba(239, 68, 68, 0.12);
+  --debug-error-border: rgba(239, 68, 68, 0.25);
+  --debug-ok-bg: rgba(52, 211, 153, 0.12);
+  --debug-ok-border: rgba(52, 211, 153, 0.25);
+  --debug-ok-dot: rgba(52, 211, 153, 1);
+  --label-bg: rgba(255, 255, 255, 0.05);
+  --label-border: rgba(255, 255, 255, 0.08);
+  --pill-bg: rgba(0, 0, 0, 0.25);
+  --pill-border: rgba(255, 255, 255, 0.08);
+  --kbd-border: rgba(255, 255, 255, 0.15);
+  --kbd-border-strong: rgba(255, 255, 255, 0.25);
+  --kbd-bg: rgba(255, 255, 255, 0.06);
+}
+
+body.theme-light {
+  --color-scheme: light;
+  --bg: #f4f6fb;
+  --text: #0f172a;
+  --text-muted: rgba(15, 23, 42, 0.7);
+  --panel-bg: rgba(255, 255, 255, 0.85);
+  --panel-border: rgba(15, 23, 42, 0.08);
+  --panel-bg-soft: rgba(255, 255, 255, 0.7);
+  --panel-bg-strong: rgba(255, 255, 255, 0.92);
+  --toolbar-bg: rgba(255, 255, 255, 0.85);
+  --toolbar-border: rgba(15, 23, 42, 0.12);
+  --grid-line: rgba(15, 23, 42, 0.08);
+  --grid-opacity: 0.4;
+  --node-bg: rgba(255, 255, 255, 0.96);
+  --node-border: rgba(15, 23, 42, 0.12);
+  --node-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  --node-selected-border: rgba(16, 185, 129, 0.95);
+  --node-selected-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+  --node-header-bg: rgba(15, 23, 42, 0.04);
+  --node-header-border: rgba(15, 23, 42, 0.08);
+  --node-icon-bg: rgba(15, 23, 42, 0.08);
+  --node-icon-border: rgba(15, 23, 42, 0.1);
+  --port-bg: rgba(16, 185, 129, 0.9);
+  --port-border: rgba(255, 255, 255, 0.7);
+  --port-shadow: 0 6px 12px rgba(15, 23, 42, 0.18);
+  --port-hover-ok-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18), 0 0 12px rgba(16, 185, 129, 0.35);
+  --port-hover-bad-bg: rgba(248, 113, 113, 0.95);
+  --port-hover-bad-shadow: 0 0 0 4px rgba(248, 113, 113, 0.2), 0 0 12px rgba(248, 113, 113, 0.35);
+  --edge: rgba(15, 23, 42, 0.55);
+  --edge-selected: rgba(16, 185, 129, 0.95);
+  --edge-preview-ok: rgba(16, 185, 129, 0.95);
+  --edge-preview-bad: rgba(239, 68, 68, 0.95);
+  --drag-preview-border: rgba(148, 163, 184, 0.75);
+  --drag-preview-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(148, 163, 184, 0.08));
+  --drag-preview-text: rgba(15, 23, 42, 0.75);
+  --drag-preview-shadow: 0 10px 26px rgba(15, 23, 42, 0.12), inset 0 0 0 1px rgba(148, 163, 184, 0.12);
+  --drag-delivery-border: rgba(16, 185, 129, 0.65);
+  --drag-delivery-text: rgba(16, 185, 129, 0.95);
+  --drag-delivery-bg: linear-gradient(145deg, rgba(16, 185, 129, 0.12), rgba(255, 255, 255, 0.7));
+  --drag-timer-border: rgba(245, 158, 11, 0.75);
+  --drag-timer-text: rgba(217, 119, 6, 0.95);
+  --drag-timer-bg: linear-gradient(145deg, rgba(245, 158, 11, 0.12), rgba(255, 255, 255, 0.7));
+  --drag-event-border: rgba(56, 189, 248, 0.75);
+  --drag-event-text: rgba(14, 116, 144, 0.95);
+  --drag-event-bg: linear-gradient(145deg, rgba(56, 189, 248, 0.12), rgba(255, 255, 255, 0.7));
+  --marquee-border: rgba(16, 185, 129, 0.8);
+  --marquee-bg: rgba(16, 185, 129, 0.12);
+  --marquee-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+  --watermark-bg: rgba(255, 255, 255, 0.85);
+  --watermark-border: rgba(15, 23, 42, 0.12);
+  --palette-item-bg: rgba(255, 255, 255, 0.9);
+  --palette-item-border: rgba(15, 23, 42, 0.08);
+  --palette-icon-bg: rgba(15, 23, 42, 0.06);
+  --palette-icon-border: rgba(15, 23, 42, 0.08);
+  --palette-footer-border: rgba(15, 23, 42, 0.08);
+  --debug-bg: rgba(255, 255, 255, 0.9);
+  --debug-border: rgba(15, 23, 42, 0.08);
+  --debug-json: #0f172a;
+  --debug-error-bg: rgba(239, 68, 68, 0.1);
+  --debug-error-border: rgba(239, 68, 68, 0.25);
+  --debug-ok-bg: rgba(16, 185, 129, 0.12);
+  --debug-ok-border: rgba(16, 185, 129, 0.25);
+  --debug-ok-dot: rgba(16, 185, 129, 0.95);
+  --label-bg: rgba(15, 23, 42, 0.04);
+  --label-border: rgba(15, 23, 42, 0.08);
+  --pill-bg: rgba(15, 23, 42, 0.08);
+  --pill-border: rgba(15, 23, 42, 0.08);
+  --kbd-border: rgba(15, 23, 42, 0.15);
+  --kbd-border-strong: rgba(15, 23, 42, 0.3);
+  --kbd-bg: rgba(15, 23, 42, 0.06);
+}
+
 html,
 body {
   height: 100%;
@@ -7,8 +151,9 @@ body {
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
     "Segoe UI Emoji";
-  background: #0b1220;
-  color: #e5e7eb;
+  background: var(--bg);
+  color: var(--text);
+  color-scheme: var(--color-scheme);
 }
 
 * {
@@ -22,8 +167,8 @@ pre {
 }
 
 /* PrimeNG overlay panels should float above canvas/nodes */
-.p-overlay, 
-.p-overlaypanel, 
+.p-overlay,
+.p-overlaypanel,
 .p-dropdown-panel,
 .p-multiselect-panel,
 .p-datepicker,

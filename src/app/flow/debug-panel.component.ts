@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
@@ -31,13 +31,13 @@ import { FlowStore } from './flow-store.service';
         <div class="errorsTitle">Validation Errors</div>
         <ul>
           <li *ngFor="let e of store.validationErrors()">
-            <span class="nid">{{ e.id }}</span> — {{ e.message }}
+            <span class="nid">{{ e.id }}</span> â€” {{ e.message }}
           </li>
         </ul>
       </div>
 
       <div class="ok" *ngIf="store.validationErrors().length === 0">
-        <span class="dot"></span> Valid ✅
+        <span class="dot"></span> Valid âœ…
       </div>
     </p-panel>
   `,
@@ -61,21 +61,21 @@ import { FlowStore } from './flow-store.service';
         min-height: 0;
         overflow: auto;
         border-radius: 12px;
-        background: rgba(0, 0, 0, 0.25);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--debug-bg);
+        border: 1px solid var(--debug-border);
         padding: 10px;
       }
       .json {
         font-size: 12px;
         line-height: 1.35;
-        color: #e5e7eb;
+        color: var(--debug-json);
       }
       .errors {
         margin-top: 10px;
         padding: 10px;
         border-radius: 12px;
-        background: rgba(239, 68, 68, 0.12);
-        border: 1px solid rgba(239, 68, 68, 0.25);
+        background: var(--debug-error-bg);
+        border: 1px solid var(--debug-error-border);
       }
       .errorsTitle {
         font-weight: 700;
@@ -99,8 +99,8 @@ import { FlowStore } from './flow-store.service';
         margin-top: 10px;
         padding: 10px;
         border-radius: 12px;
-        background: rgba(52, 211, 153, 0.12);
-        border: 1px solid rgba(52, 211, 153, 0.25);
+        background: var(--debug-ok-bg);
+        border: 1px solid var(--debug-ok-border);
         font-size: 12px;
         display: flex;
         gap: 8px;
@@ -110,7 +110,7 @@ import { FlowStore } from './flow-store.service';
         width: 8px;
         height: 8px;
         border-radius: 999px;
-        background: rgba(52, 211, 153, 1);
+        background: var(--debug-ok-dot);
       }
     `
   ],
@@ -143,3 +143,4 @@ export class DebugPanelComponent {
     }
   }
 }
+
