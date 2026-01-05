@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --color-scheme: dark;
   --bg: #0b1220;
   --text: #e5e7eb;
@@ -37,6 +37,8 @@
   --port-hover-bad-shadow: 0 0 0 4px rgba(248, 113, 113, 0.28), 0 0 18px rgba(248, 113, 113, 0.6);
   --edge: rgba(255, 255, 255, 0.75);
   --edge-selected: rgba(52, 211, 153, 0.95);
+  --edge-flow: rgba(52, 211, 153, 0.95);
+  --edge-flow-glow: rgba(52, 211, 153, 0.55);
   --edge-preview: rgba(148, 163, 184, 0.7);
   --edge-preview-ok: rgba(52, 211, 153, 0.95);
   --edge-preview-bad: rgba(248, 113, 113, 0.95);
@@ -119,6 +121,8 @@ body.theme-light {
   --port-hover-bad-shadow: 0 0 0 4px rgba(248, 113, 113, 0.2), 0 0 12px rgba(248, 113, 113, 0.35);
   --edge: rgba(15, 23, 42, 0.55);
   --edge-selected: rgba(16, 185, 129, 0.95);
+  --edge-flow: rgba(16, 185, 129, 0.9);
+  --edge-flow-glow: rgba(16, 185, 129, 0.35);
   --edge-preview: rgba(100, 116, 139, 0.5);
   --edge-preview-ok: rgba(16, 185, 129, 0.95);
   --edge-preview-bad: rgba(239, 68, 68, 0.95);
@@ -246,5 +250,7 @@ pre {
   width: 100% !important;
   box-sizing: border-box;
 }
+
+
 
 

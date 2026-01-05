@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlowEdge, FlowNode, NODE_H, NODE_W, Orientation, Selection } from './models';
 
@@ -29,6 +29,7 @@ function clamp(v: number, a: number, b: number) {
         <ng-container *ngFor="let e of edges">
           <path class="hit" [attr.d]="pathForEdge(e)" (pointerdown)="onEdgeDown($event, e.id)"></path>
           <path class="edge" [attr.d]="pathForEdge(e)" [attr.stroke]="edgeStroke(e)" [attr.filter]="edgeFilter(e)"></path>
+          <path class="edge flow" [attr.d]="pathForEdge(e)"></path>
         </ng-container>
 
         <ng-container *ngIf="connecting">
@@ -56,6 +57,33 @@ function clamp(v: number, a: number, b: number) {
         fill: none;
         stroke-width: 2.2;
         filter: none;
+      }
+
+      .edge.flow {
+    stroke: rgb(255 255 255);
+    stroke-dasharray: 3 9;
+    stroke-dashoffset: 0;
+    stroke-width: 5px;
+    stroke-linecap: round;
+    opacity: 1;
+        animation: edge-flow 0.75s linear infinite;
+
+      }
+        
+
+      @keyframes edge-flow {
+        from {
+          stroke-dashoffset: 0;
+        }
+        to {
+          stroke-dashoffset: -50;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .edge.flow {
+          animation-duration: 2.2s;
+        }
       }
 
       .edge.preview {
@@ -96,9 +124,9 @@ export class EdgeLayerComponent {
   @Input() connecting:
     | null
     | {
-        fromNodeId: string;
-        toPoint: Pt;
-      } = null;
+      fromNodeId: string;
+      toPoint: Pt;
+    } = null;
 
   @Input() previewState: 'none' | 'ok' | 'bad' = 'none';
 
@@ -178,4 +206,9 @@ export class EdgeLayerComponent {
     this.selectEdge.emit(edgeId);
   }
 }
+
+
+
+
+
 
