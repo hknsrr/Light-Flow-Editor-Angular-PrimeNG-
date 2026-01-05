@@ -40,7 +40,7 @@ import { FlowNode, TimerUnit } from '../models';
     </div>
 
     <div class="label">
-      <span class="pill">Label</span>
+      <span class="pill">-></span>
       <span>{{ displayLabel }}</span>
     </div>
   `,
