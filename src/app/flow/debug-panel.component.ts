@@ -69,6 +69,7 @@ import { FlowStore } from './flow-store.service';
         font-size: 12px;
         line-height: 1.35;
         color: var(--debug-json);
+        height: 400px;
       }
       .errors {
         margin-top: 10px;
