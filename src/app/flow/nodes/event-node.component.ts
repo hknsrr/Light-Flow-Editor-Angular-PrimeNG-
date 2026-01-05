@@ -53,10 +53,11 @@ export class EventNodeComponent {
 
   get eventType(): 'clicked' | 'opened' {
     const d = this.node.data as any;
-    return d.eventType ?? 'clicked';
+    return d.eventType ?? 'opened';
   }
 
   commit(v: 'clicked' | 'opened') {
     this.store.updateNodeData(this.node.id, { eventType: v }, true);
   }
 }
+

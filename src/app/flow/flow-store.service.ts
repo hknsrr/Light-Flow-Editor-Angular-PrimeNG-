@@ -1,4 +1,4 @@
-﻿import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 import {
   FlowEdge,
   FlowNode,
@@ -55,7 +55,7 @@ export class FlowStore {
         id: 'n2',
         type: 'EVENT',
         position: { x: 400, y: 140 },
-        data: { eventType: 'clicked' }
+        data: { eventType: 'opened' }
       },
       {
         id: 'n3',
@@ -225,7 +225,7 @@ requestFitView() {
           ? { campaignId: null, deliveryId: null }
           : type === 'TIMER'
             ? ({ value: 1, unit: 'days' } satisfies TimerNodeData)
-            : { eventType: 'clicked' }
+            : { eventType: 'opened' }
     };
 
     this._state.update((s) => ({ ...s, nodes: [...s.nodes, node], selection: { nodeIds: [id], edgeIds: [] } }));
@@ -282,12 +282,12 @@ requestFitView() {
   setOrientation(orientation: Orientation) {
     if (orientation === this._state().orientation) return;
 
-    // tek undo adÄ±mÄ± olsun diye: Ã¶nce history al, sonra orientation+auto arrange uygula
+    // tek undo adımı olsun diye: önce history al, sonra orientation+auto arrange uygula
     this.captureHistory();
 
     this._state.update((s) => ({ ...s, orientation }));
 
-    // Orientation deÄŸiÅŸince otomatik arrange
+    // Orientation değişince otomatik arrange
     this.autoArrangeInternal();
   }
 
@@ -525,6 +525,7 @@ requestFitView() {
 function max(a: number, b: number) {
   return a > b ? a : b;
 }
+
 
 
 
