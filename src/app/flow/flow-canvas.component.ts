@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild, computed, effect, inject, signal, untracked } from '@angular/core';
+import { ChangeDetectionStrategy, AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild, computed, effect, inject, signal, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlowStore } from './flow-store.service';
 import { EdgeLayerComponent } from './edge-layer.component';
@@ -251,7 +251,7 @@ readonly connecting = this.store.connecting;
   private panActive = false;
   private panStart: { x: number; y: number; panX: number; panY: number } | null = null;
 
-  private nodeDragActive: { nodeId: string; start: Pt; nodePos: Pt } | null = null;
+  private nodeDragActive: { nodeIds: string[]; start: Pt; nodePosById: Record<string, Pt> } | null = null;
 
   private connectPointerId: number | null = null;
   private didInitialFit = false;
@@ -593,15 +593,30 @@ readonly connecting = this.store.connecting;
     ev.preventDefault();
     ev.stopPropagation();
 
-    this.store.selectSingleNode(node.id);
+    const sel = this.selection();
+    let dragIds: string[];
+    if (sel.nodeIds.length > 1 && sel.nodeIds.includes(node.id)) {
+      dragIds = sel.nodeIds.slice();
+    } else {
+      this.store.selectSingleNode(node.id);
+      dragIds = [node.id];
+    }
+
     this.store.beginDragOrPanCaptureOnce();
 
     const startWorld = this.worldFromClient(ev.clientX, ev.clientY);
+    const dragIdSet = new Set(dragIds);
+    const nodePosById: Record<string, Pt> = {};
+
+    for (const n of this.nodes()) {
+      if (!dragIdSet.has(n.id)) continue;
+      nodePosById[n.id] = { x: n.position.x, y: n.position.y };
+    }
 
     this.nodeDragActive = {
-      nodeId: node.id,
+      nodeIds: dragIds,
       start: startWorld,
-      nodePos: { x: node.position.x, y: node.position.y }
+      nodePosById
     };
 
     this.rootRef.nativeElement.setPointerCapture(ev.pointerId);
@@ -646,7 +661,14 @@ readonly connecting = this.store.connecting;
     const dx = cur.x - d.start.x;
     const dy = cur.y - d.start.y;
 
-    this.store.updateNodePosition(d.nodeId, { x: d.nodePos.x + dx, y: d.nodePos.y + dy }, false);
+    const nextPositions: Record<string, Pt> = {};
+    for (const id of d.nodeIds) {
+      const base = d.nodePosById[id];
+      if (!base) continue;
+      nextPositions[id] = { x: base.x + dx, y: base.y + dy };
+    }
+
+    this.store.updateNodesPosition(nextPositions, false);
   }
 
   startConnect(ev: PointerEvent, node: FlowNode) {
@@ -742,6 +764,8 @@ readonly connecting = this.store.connecting;
   }
 
   selectNode(nodeId: string) {
+    const sel = this.selection();
+    if (sel.nodeIds.length > 1 && sel.nodeIds.includes(nodeId)) return;
     this.store.selectSingleNode(nodeId);
   }
 
@@ -776,6 +800,7 @@ readonly connecting = this.store.connecting;
     }
   }
 }
+
 
 
 

@@ -239,6 +239,18 @@ requestFitView() {
     }));
   }
 
+  updateNodesPosition(positions: Record<string, { x: number; y: number }>, recordHistory = false) {
+    if (recordHistory) this.captureHistory();
+    this._state.update((s) => ({
+      ...s,
+      nodes: s.nodes.map((n) => {
+        const pos = positions[n.id];
+        if (!pos) return n;
+        return { ...n, position: { x: Math.max(0, pos.x), y: Math.max(0, pos.y) } };
+      })
+    }));
+  }
+
   updateNodeData(nodeId: string, patch: Partial<FlowNode['data']>, recordHistory = true) {
     if (recordHistory) this.captureHistory();
 
@@ -525,6 +537,7 @@ requestFitView() {
 function max(a: number, b: number) {
   return a > b ? a : b;
 }
+
 
 
 

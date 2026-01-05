@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -89,7 +89,7 @@ import { ThemeService } from '../theme.service';
       </div>
 
       <div class="hint">
-        <span class="kbd">Space</span> + drag to pan | Middle mouse drag to pan | Wheel to zoom | Del to delete | Drag to box-select and delete
+        <span class="kbd">Space</span> + drag to pan | Middle mouse drag to pan | Wheel to zoom | Del to delete | Drag to box-select | Drag selected nodes to move together
       </div>
     </div>
   `,
@@ -215,3 +215,4 @@ export class ToolbarComponent {
     }, 300);
   }
 }
+
