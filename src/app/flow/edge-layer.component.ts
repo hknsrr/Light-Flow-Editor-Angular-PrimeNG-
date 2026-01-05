@@ -60,31 +60,25 @@ function clamp(v: number, a: number, b: number) {
       }
 
       .edge.flow {
-    stroke: rgb(255 255 255);
-    stroke-dasharray: 3 9;
-    stroke-dashoffset: 0;
-    stroke-width: 5px;
-    stroke-linecap: round;
-    opacity: 1;
-        animation: edge-flow 0.75s linear infinite;
-
+        stroke: rgb(255 255 255);
+        stroke-dasharray: 3 9;
+        stroke-dashoffset: 0;
+        stroke-width: 4px;
+        stroke-linecap: round;
+        opacity: 0.85;
+        animation: edge-flow 2s linear infinite;
+        will-change: stroke-dashoffset;
       }
-        
 
       @keyframes edge-flow {
         from {
           stroke-dashoffset: 0;
         }
         to {
-          stroke-dashoffset: -50;
+          stroke-dashoffset: -36;
         }
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .edge.flow {
-          animation-duration: 2.2s;
-        }
-      }
 
       .edge.preview {
         stroke-dasharray: 6 5;
@@ -206,6 +200,10 @@ export class EdgeLayerComponent {
     this.selectEdge.emit(edgeId);
   }
 }
+
+
+
+
 
 
 
