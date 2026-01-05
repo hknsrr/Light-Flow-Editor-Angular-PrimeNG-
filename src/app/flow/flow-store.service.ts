@@ -235,7 +235,7 @@ requestFitView() {
     if (recordHistory) this.captureHistory();
     this._state.update((s) => ({
       ...s,
-      nodes: s.nodes.map((n) => (n.id === nodeId ? { ...n, position: { x: Math.max(0, position.x), y: Math.max(0, position.y) } } : n))
+      nodes: s.nodes.map((n) => (n.id === nodeId ? { ...n, position: { x: position.x, y: position.y } } : n))
     }));
   }
 
@@ -246,7 +246,7 @@ requestFitView() {
       nodes: s.nodes.map((n) => {
         const pos = positions[n.id];
         if (!pos) return n;
-        return { ...n, position: { x: Math.max(0, pos.x), y: Math.max(0, pos.y) } };
+        return { ...n, position: { x: pos.x, y: pos.y } };
       })
     }));
   }
@@ -537,6 +537,7 @@ requestFitView() {
 function max(a: number, b: number) {
   return a > b ? a : b;
 }
+
 
 
 
