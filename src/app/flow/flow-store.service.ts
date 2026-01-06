@@ -39,41 +39,62 @@ function deepClone<T>(v: T): T {
 
 @Injectable({ providedIn: 'root' })
 export class FlowStore {
-  private _idSeq = 10;
+  private _idSeq = 16;
 
   private readonly _state = signal<State>({
     orientation: 'LR',
-    viewport: { panX: 40, panY: 40, zoom: 1 },
+    viewport: { panX: 12.373331705729107, panY: 226.80331675211588, zoom: 0.5953333536783855 },
     nodes: [
       {
         id: 'n1',
         type: 'DELIVERY',
         position: { x: 80, y: 140 },
-        data: { campaignId: 'C1', deliveryId: 'D2' }
+        data: { campaignId: 'C1', deliveryId: 'D1' }
       },
       {
         id: 'n2',
         type: 'EVENT',
-        position: { x: 400, y: 140 },
+        position: { x: 400, y: 364.4120453867795 },
         data: { eventType: 'opened' }
       },
       {
         id: 'n3',
         type: 'TIMER',
-        position: { x: 720, y: 140 },
+        position: { x: 729.4064536302845, y: 342.91150671566106 },
         data: { value: 1, unit: 'days' }
       },
       {
         id: 'n4',
         type: 'DELIVERY',
-        position: { x: 1040, y: 140 },
+        position: { x: 1056.125378372675, y: 346.9428513088298 },
         data: { campaignId: 'C2', deliveryId: 'D5' }
+      },
+      {
+        id: 'n10',
+        type: 'EVENT',
+        position: { x: 384, y: -9 },
+        data: { eventType: 'clicked' }
+      },
+      {
+        id: 'n12',
+        type: 'TIMER',
+        position: { x: 738.4076334951767, y: -11.094059410170075 },
+        data: { value: 5, unit: 'hours' }
+      },
+      {
+        id: 'n13',
+        type: 'DELIVERY',
+        position: { x: 1074.6260195664488, y: 17.907043562730617 },
+        data: { campaignId: 'C1', deliveryId: 'D2' }
       }
     ],
     edges: [
       { id: 'e1', from: { nodeId: 'n1', port: 'out' }, to: { nodeId: 'n2', port: 'in' } },
       { id: 'e2', from: { nodeId: 'n2', port: 'out' }, to: { nodeId: 'n3', port: 'in' } },
-      { id: 'e3', from: { nodeId: 'n3', port: 'out' }, to: { nodeId: 'n4', port: 'in' } }
+      { id: 'e3', from: { nodeId: 'n3', port: 'out' }, to: { nodeId: 'n4', port: 'in' } },
+      { id: 'e11', from: { nodeId: 'n1', port: 'out' }, to: { nodeId: 'n10', port: 'in' } },
+      { id: 'e14', from: { nodeId: 'n10', port: 'out' }, to: { nodeId: 'n12', port: 'in' } },
+      { id: 'e15', from: { nodeId: 'n12', port: 'out' }, to: { nodeId: 'n13', port: 'in' } }
     ],
     selection: { nodeIds: [], edgeIds: [] },
     connecting: null
